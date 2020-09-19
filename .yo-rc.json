@@ -1,0 +1,10 @@
+{
+  "generator-jhipster-module": {
+    "promptValues": {
+      "githubName": "ArcQ",
+      "authorName": "Eddie Law",
+      "authorEmail": "eddielaw296@gmail.com",
+      "authorUrl": ""
+    }
+  }
+}
