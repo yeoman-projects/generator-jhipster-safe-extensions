@@ -1,6 +1,6 @@
 {
   "name": "generator-jhipster-safe-extensions",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "extend generated code safely",
   "keywords": [
     "yeoman-generator",
