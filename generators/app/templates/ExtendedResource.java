@@ -1,4 +1,4 @@
-package <%= packageName %>.web.rest.<%= subPackageName %>.v1;
+package <%= packageName %>.web.rest.<%= subPackageName %>.<%= version %>;
 
 import <%= packageName %>.service.<%= subPackageName %>.<%= entityName %>Service<%= suffix %>;
 import <%= packageName %>.service.dto.<%= entityName %>DTO;
@@ -17,7 +17,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
-@Controller("/api/<%= subPackageName %>/v1")
+@Controller("/<%= subPackageName %>/v1")
 public class <%= entityName %>Resource<%= suffix %> {
 
     private final Logger log = LoggerFactory.getLogger(<%= entityName %>Resource.class);

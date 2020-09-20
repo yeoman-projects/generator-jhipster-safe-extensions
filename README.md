@@ -1,5 +1,8 @@
 # generator-jhipster-safe-extensions
 
+It's hard regenerating entities if you need to add a new field if you develop in jhipster by adding custom code to generated java classes.
+This makes it a little easier by composing generated classes so you can make modifications wihtout worrying about generating more code down the line.
+
 [![NPM version][npm-image]][npm-url] [![Build Status][github-actions-image]][github-actions-url] [![Dependency Status][daviddm-image]][daviddm-url]
 
 > JHipster module, extend generated code safely

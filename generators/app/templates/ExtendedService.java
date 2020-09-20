@@ -9,8 +9,12 @@ import javax.transaction.Transactional;
 
 @Singleton
 @Transactional
-public class <%= entityName %>Service<%= suffix %> extends <%= entityName %>Service {
-    public <%= entityName %>Service<%= suffix %>(<%= entityName %>Repository <%= entityVariableName %>Repository, <%= entityName %>Mapper <%= entityVariableName %>Mapper) {
-        super(<%= entityVariableName %>Repository, <%= entityVariableName %>Mapper);
+public class <%= entityName %>Service<%= suffix %> {
+    private final <%= entityName %>Mapper <%= entityVariableName %>Mapper;
+    private final <%= entityName %>Repository<%= suffix %> <%= entityVariableName %>Repository<%= suffix %>;
+
+    public <%= entityName %>Service<%= suffix %>(<%= entityVariableName %>Mapper <%= entityVariableName %>Mapper, <%= entityVariableName %>Repository<%= suffix %> <%= entityVariableName %>Repository<%= suffix %>) {
+        this.<%= entityVariableName %>Mapper = <%= entityVariableName %>Mapper;
+        this.<%= entityVariableName %>Repository<%= suffix %> = <%= entityVariableName %>Repository<%= suffix %>;
     }
 }

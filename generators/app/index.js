@@ -60,6 +60,13 @@ module.exports = class extends BaseGenerator {
                 name: 'suffix',
                 message: 'What suffix would you like to add to generated classes?',
                 default: 'App'
+            },
+            {
+                when: () => typeof this.version === 'undefined',
+                type: 'input',
+                name: 'version',
+                message: 'What version would you like this resource to be?',
+                default: 'v1'
             }
         ];
 
@@ -105,7 +112,18 @@ module.exports = class extends BaseGenerator {
         this.log('------\n');
 
         this.template('ExtendedService.java', `${javaDir}service/${this.subPackageName}/${this.entityName}Service${this.suffix}.java`);
-        this.template('ExtendedResource.java', `${javaDir}web/rest/${this.subPackageName}/${this.entityName}Resource${this.suffix}.java`);
+        this.template(
+            'ExtendedResource.java',
+            `${javaDir}web/rest/${this.subPackageName}/${this.version}/${this.entityName}Resource${this.suffix}.java`
+        );
+        this.template(
+            'ExtendedResourceTest.java',
+            `${SERVER_TEST_SRC_DIR}web/rest/${this.subPackageName}/${this.version}/${this.entityName}Resource${this.suffix}.java`
+        );
+        this.template(
+            'ExtendedRepository.java',
+            `${javaDir}repository/${this.subPackageName}/${this.entityName}Repository{this.suffix}.java`
+        );
     }
 
     install() {
