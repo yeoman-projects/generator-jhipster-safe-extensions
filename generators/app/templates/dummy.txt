@@ -1,2 +1,0 @@
-hello safe-extensions!
-It's dummy.txt

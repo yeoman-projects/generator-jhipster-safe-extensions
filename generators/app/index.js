@@ -4,13 +4,15 @@ const BaseGenerator = require('generator-jhipster/generators/generator-base');
 const jhipsterConstants = require('generator-jhipster/generators/generator-constants');
 const packagejs = require('../../package.json');
 
+const SERVER_TEST_SRC_DIR = jhipsterConstants.SERVER_TEST_SRC_DIR;
+
 module.exports = class extends BaseGenerator {
     get initializing() {
         return {
             init(args) {
                 if (args === 'default') {
                     // do something when argument is 'default'
-                    this.message = 'default message';
+                    this.suffix = 'App';
                 }
             },
             readConfig() {
@@ -46,11 +48,18 @@ module.exports = class extends BaseGenerator {
     prompting() {
         const prompts = [
             {
-                when: () => typeof this.message === 'undefined',
+                when: () => typeof this.entityName === 'undefined',
                 type: 'input',
-                name: 'message',
-                message: 'Please put something',
-                default: 'hello world!'
+                name: 'entityName',
+                message: 'What entity would you like to extend?',
+                default: 'Hello'
+            },
+            {
+                when: () => typeof this.suffix === 'undefined',
+                type: 'input',
+                name: 'suffix',
+                message: 'What suffix would you like to add to generated classes?',
+                default: 'App'
             }
         ];
 
@@ -76,46 +85,27 @@ module.exports = class extends BaseGenerator {
 
         // use constants from generator-constants.js
         const javaDir = `${jhipsterConstants.SERVER_MAIN_SRC_DIR + this.packageFolder}/`;
-        const resourceDir = jhipsterConstants.SERVER_MAIN_RES_DIR;
-        const webappDir = jhipsterConstants.CLIENT_MAIN_SRC_DIR;
 
         // variable from questions
-        if (typeof this.message === 'undefined') {
-            this.message = this.promptAnswers.message;
+        if (typeof this.suffix === 'undefined') {
+            this.suffix = this.promptAnswers.suffix;
         }
+
+        if (typeof this.entityName === 'undefined') {
+            this.entityName = this.promptAnswers.entityName;
+        }
+
+        this.subPackageName = this.suffix.toLowerCase();
+        this.entityVariableName = this.entityName.toLowerCase();
 
         // show all variables
-        this.log('\n--- some config read from config ---');
-        this.log(`baseName=${this.baseName}`);
-        this.log(`packageName=${this.packageName}`);
-        this.log(`clientFramework=${this.clientFramework}`);
-        this.log(`clientPackageManager=${this.clientPackageManager}`);
-        this.log(`buildTool=${this.buildTool}`);
-
-        this.log('\n--- some function ---');
-        this.log(`angularAppName=${this.angularAppName}`);
-
-        this.log('\n--- some const ---');
-        this.log(`javaDir=${javaDir}`);
-        this.log(`resourceDir=${resourceDir}`);
-        this.log(`webappDir=${webappDir}`);
-
-        this.log('\n--- variables from questions ---');
-        this.log(`message=${this.message}`);
+        this.log('\n--- Generating ---');
+        this.log(`service: ${javaDir}service/${this.subPackageName}/${this.entityName}Service${this.suffix}.java`);
+        this.log(`resource:${javaDir}web/rest/${this.subPackageName}Resource${this.suffix}.java`);
         this.log('------\n');
 
-        if (this.clientFramework === 'react') {
-            this.template('dummy.txt', 'dummy-react.txt');
-        }
-        if (this.clientFramework === 'angularX') {
-            this.template('dummy.txt', 'dummy-angularX.txt');
-        }
-        if (this.buildTool === 'maven') {
-            this.template('dummy.txt', 'dummy-maven.txt');
-        }
-        if (this.buildTool === 'gradle') {
-            this.template('dummy.txt', 'dummy-gradle.txt');
-        }
+        this.template('ExtendedService.java', `${javaDir}service/${this.subPackageName}/${this.entityName}Service${this.suffix}.java`);
+        this.template('ExtendedResource.java', `${javaDir}web/rest/${this.subPackageName}/${this.entityName}Resource${this.suffix}.java`);
     }
 
     install() {
